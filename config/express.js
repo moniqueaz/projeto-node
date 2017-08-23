@@ -13,7 +13,6 @@ module.exports = function() {
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(bodyParser.json());
     app.use(expressValidator());
-
     
     load('routes', {cwd: 'app'})
     .then('infra')
@@ -25,7 +24,7 @@ module.exports = function() {
 
     app.use(function(error, req, res, next){
         if(process.env.NODE_ENV == 'production'){
-            res.status(404).render('erros/500');
+            res.status(500).render('erros/500');
             return;
         }
         next(error);

@@ -6,7 +6,6 @@ app.set('io', io);
 
 // localhost 3000
 var porta = process.env.PORT || 3000;
-
 http.listen(porta,function(){
-    console.log("servidor rodando para o heroku");
+    console.log("servidor rodando no heroku");
 });
