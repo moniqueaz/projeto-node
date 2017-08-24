@@ -1,8 +1,8 @@
 module.exports = function(app) {
     
         var listaProdutos = function(req, res, next) {
-            var connection = app.infra.connectionFactory();
-            var produtosDAO = new app.infra.ProdutosDAO(connection);
+           // var connection = app.infra.connectionFactory();
+            var produtosDAO = new app.infra.ProdutosDAO(app);
     
             produtosDAO.lista(function(err, results) {
                 if(err){
@@ -18,20 +18,20 @@ module.exports = function(app) {
                 });
             });
     
-            connection.end();
+           // connection.end();
         }
     
         app.get('/produtos', listaProdutos);
     
         app.get('/produtos/json', function(req, res) {
-            var connection = app.infra.connectionFactory();
-            var produtosDAO = new app.infra.ProdutosDAO(connection);
+           // var connection = app.infra.connectionFactory();
+            var produtosDAO = new app.infra.ProdutosDAO(app);
     
             produtosDAO.lista(function(err, results) {
                 res.json(results);
             });
     
-            connection.end();
+            //connection.end();
         });
     
         app.get('/produtos/form', function(req, res) {
@@ -45,6 +45,7 @@ module.exports = function(app) {
             req.assert('preco', 'Formato inválido').isFloat();
     
             // codigo Deprecated temporario
+            
             var erros = req.validationErrors();
             if(erros) {
                 res.format({
@@ -58,9 +59,10 @@ module.exports = function(app) {
     
                 return;
             }
-/* Refatorando, ainda com bugs
+            /*
+// Refatorando, ainda com bugs
             req.getValidationResult()
-            .then(function(results) {
+            .then(function(results){
                 var erros = results.array();
                 res.format({
                     html: function() {
@@ -71,24 +73,24 @@ module.exports = function(app) {
                     }
                 });                         
             })
-            .catch(function(results){
-                var connection = app.infra.connectionFactory();
-                var produtosDAO = new app.infra.ProdutosDAO(connection);
-        
+            .catch(function(erro){
+                //var connection = app.infra.connectionFactory();
+                var produtosDAO = new app.infra.ProdutosDAO(app);
                 produtosDAO.salva(produto, function(err, results) {
                     res.redirect('/produtos');
                 });
-            })
-    */
-            var connection = app.infra.connectionFactory();
-            var produtosDAO = new app.infra.ProdutosDAO(connection);
+            });
+            */      
+    
+    
+           // var connection = app.infra.connectionFactory();
+            var produtosDAO = new app.infra.ProdutosDAO(app);
     
             produtosDAO.salva(produto, function(err, results) {
                 res.redirect('/produtos');
             });
     
-            connection.end();
-            
+            //connection.end();
         });
     }
     
